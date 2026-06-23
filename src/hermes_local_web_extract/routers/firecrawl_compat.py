@@ -43,6 +43,20 @@ _SUPPORTED_FORMATS = {"markdown", "html", "text"}
         "Not all Firecrawl fields are supported. See docs/limitations.md."
     ),
 )
+@router.post(
+    "/v2/scrape",
+    response_model=FirecrawlScrapeResponse,
+    responses={
+        400: {"model": ErrorResponse},
+        429: {"model": ErrorResponse},
+        500: {"model": ErrorResponse},
+    },
+    summary="Firecrawl-compatible scrape endpoint (v2 alias of /v1/scrape)",
+    description=(
+        "Same as /v1/scrape — aliased so the Firecrawl v2 SDK can target "
+        "this server without changing FIRECRAWL_API_URL."
+    ),
+)
 async def scrape(
     request: Request,
     body: FirecrawlScrapeRequest,
